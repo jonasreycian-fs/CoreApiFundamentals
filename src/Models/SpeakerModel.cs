@@ -1,11 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace CoreCodeCamp.Data
+﻿namespace CoreCodeCamp.Models
 {
-    public class Speaker
+    public class SpeakerModel
     {
-        [Key]
-        public int SpeakerId { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? MiddleName { get; set; }
@@ -14,6 +10,5 @@ namespace CoreCodeCamp.Data
         public string? BlogUrl { get; set; }
         public string? Twitter { get; set; }
         public string? GitHub { get; set; }
-
     }
 }

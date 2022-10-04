@@ -1,92 +1,53 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using CoreCodeCamp.Data;
+using CoreCodeCamp.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoreCodeCamp.Controllers
 {
     [ApiController]
-    [Route("api/[controller")]
+    [Route("api/[controller]")]
     public class CampsController : Controller
     {
-        private readonly ILogger logger;
+        private readonly ILogger _logger;
+        private readonly ICampRepository _repository;
+        private readonly IMapper _mapper;
 
-        public CampsController(ILogger logger)
+        public CampsController(ILogger logger, ICampRepository repository, IMapper mapper)
         {
-            this.logger = logger;
+            _logger = logger;
+            _repository = repository;
+            _mapper = mapper;
         }
 
 
-        // GET: CampsController
-        public IActionResult Get()
-        {
-            return Ok(new { Moniker ="ATL2022", Name="Atlanta CodeCamp"});
-        }
-
-        // GET: CampsController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: CampsController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: CampsController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        [HttpGet]
+        public async Task<ActionResult<CampModel[]>> Get(bool includeTalk = false)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var results = await _repository.GetAllCampsAsync(includeTalk);
+                return _mapper.Map<CampModel[]>(results);
             }
-            catch
+            catch (System.Exception)
             {
-                return View();
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
         }
 
-        // GET: CampsController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: CampsController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [HttpGet("{moniker}")]
+        public ActionResult<CampModel> Get(string moniker)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var result = _repository.GetCampAsync(moniker);
+                if (result == null) return NotFound();
+                return _mapper.Map<CampModel>(result);
             }
-            catch
+            catch (System.Exception)
             {
-                return View();
-            }
-        }
-
-        // GET: CampsController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: CampsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database Failure");
             }
         }
     }
