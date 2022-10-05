@@ -8,7 +8,7 @@ namespace CoreCodeCamp.Mapper
     {
         public CampProfile()
         {
-            this.CreateMap<Camp, CampModel>();
+            this.CreateMap<Camp, CampModel>() ;
         }
     }
 }
