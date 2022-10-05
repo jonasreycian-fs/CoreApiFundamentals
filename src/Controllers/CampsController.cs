@@ -101,7 +101,7 @@ namespace CoreCodeCamp.Controllers
         public async Task<ActionResult<CampModel>> Put(string moniker, CampModel model){
             try
             {
-                var oldCamp = await _repository.GetCampAsync(model.Moniker);
+                var oldCamp = await _repository.GetCampAsync(model.Moniker!);
                 if (oldCamp == null) return NotFound($"Could not find camp with monike of {moniker}");
 
                 _mapper.Map(model, oldCamp);

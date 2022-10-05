@@ -80,7 +80,7 @@ namespace CoreCodeCamp.Data
             return await query.ToArrayAsync();
         }
 
-        public async Task<Camp> GetCampAsync(string moniker, bool includeTalks = false)
+        public async Task<Camp> GetCampAsync(string? moniker, bool includeTalks = false)
         {
             _logger.LogInformation($"Getting a Camp for {moniker}");
 
