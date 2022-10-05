@@ -7,10 +7,9 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
 builder.Services.AddDbContext<CampContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CampsDbContext")));
-// Add services to the container.
-builder.Services.AddDbContext<CampContext>();
 builder.Services.AddScoped<ICampRepository, CampRepository>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddControllers()

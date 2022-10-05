@@ -4,7 +4,6 @@ using CoreCodeCamp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -12,10 +11,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoreCodeCamp.Migrations
 {
     [DbContext(typeof(CampContext))]
-    [Migration("20221004152403_InitialMigrations")]
-    partial class InitialMigrations
+    partial class CampContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +49,7 @@ namespace CoreCodeCamp.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.ToTable("Camps");
+                    b.ToTable("Camps", (string)null);
 
                     b.HasData(
                         new
@@ -99,7 +97,7 @@ namespace CoreCodeCamp.Migrations
 
                     b.HasKey("LocationId");
 
-                    b.ToTable("Location");
+                    b.ToTable("Location", (string)null);
 
                     b.HasData(
                         new
@@ -148,7 +146,7 @@ namespace CoreCodeCamp.Migrations
 
                     b.HasKey("SpeakerId");
 
-                    b.ToTable("Speakers");
+                    b.ToTable("Speakers", (string)null);
 
                     b.HasData(
                         new
@@ -204,7 +202,7 @@ namespace CoreCodeCamp.Migrations
 
                     b.HasIndex("SpeakerId");
 
-                    b.ToTable("Talks");
+                    b.ToTable("Talks", (string)null);
 
                     b.HasData(
                         new

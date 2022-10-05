@@ -7,35 +7,45 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace CoreCodeCamp.Migrations
 {
     [DbContext(typeof(CampContext))]
-    [Migration("20180928134504_initialdb")]
-    partial class initialdb
+    [Migration("20221005090403_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.0-preview2-35157")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "6.0.9")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("CoreCodeCamp.Data.Camp", b =>
                 {
                     b.Property<int>("CampId")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("EventDate");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CampId"), 1L, 1);
 
-                    b.Property<int>("Length");
+                    b.Property<DateTime>("EventDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<int?>("LocationId");
+                    b.Property<int>("Length")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Moniker");
+                    b.Property<int?>("LocationId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Moniker")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CampId");
 
@@ -59,23 +69,33 @@ namespace CoreCodeCamp.Migrations
                 {
                     b.Property<int>("LocationId")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
-                    b.Property<string>("Address1");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LocationId"), 1L, 1);
 
-                    b.Property<string>("Address2");
+                    b.Property<string>("Address1")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Address3");
+                    b.Property<string>("Address2")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CityTown");
+                    b.Property<string>("Address3")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Country");
+                    b.Property<string>("CityTown")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PostalCode");
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("StateProvince");
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("VenueName");
+                    b.Property<string>("StateProvince")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("VenueName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("LocationId");
 
@@ -98,23 +118,33 @@ namespace CoreCodeCamp.Migrations
                 {
                     b.Property<int>("SpeakerId")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
-                    b.Property<string>("BlogUrl");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SpeakerId"), 1L, 1);
 
-                    b.Property<string>("Company");
+                    b.Property<string>("BlogUrl")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CompanyUrl");
+                    b.Property<string>("Company")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("CompanyUrl")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("GitHub");
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("GitHub")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("MiddleName");
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Twitter");
+                    b.Property<string>("MiddleName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Twitter")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SpeakerId");
 
@@ -149,17 +179,24 @@ namespace CoreCodeCamp.Migrations
                 {
                     b.Property<int>("TalkId")
                         .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
-                    b.Property<string>("Abstract");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TalkId"), 1L, 1);
 
-                    b.Property<int?>("CampId");
+                    b.Property<string>("Abstract")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Level");
+                    b.Property<int>("CampId")
+                        .HasColumnType("int");
 
-                    b.Property<int?>("SpeakerId");
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Title");
+                    b.Property<int?>("SpeakerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TalkId");
 
@@ -195,17 +232,30 @@ namespace CoreCodeCamp.Migrations
                     b.HasOne("CoreCodeCamp.Data.Location", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId");
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("CoreCodeCamp.Data.Talk", b =>
                 {
                     b.HasOne("CoreCodeCamp.Data.Camp", "Camp")
                         .WithMany("Talks")
-                        .HasForeignKey("CampId");
+                        .HasForeignKey("CampId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("CoreCodeCamp.Data.Speaker", "Speaker")
                         .WithMany()
                         .HasForeignKey("SpeakerId");
+
+                    b.Navigation("Camp");
+
+                    b.Navigation("Speaker");
+                });
+
+            modelBuilder.Entity("CoreCodeCamp.Data.Camp", b =>
+                {
+                    b.Navigation("Talks");
                 });
 #pragma warning restore 612, 618
         }

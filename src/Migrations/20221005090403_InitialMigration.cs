@@ -1,10 +1,11 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
 
 namespace CoreCodeCamp.Migrations
 {
-    public partial class initialdb : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,16 +13,16 @@ namespace CoreCodeCamp.Migrations
                 name: "Location",
                 columns: table => new
                 {
-                    LocationId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    VenueName = table.Column<string>(nullable: true),
-                    Address1 = table.Column<string>(nullable: true),
-                    Address2 = table.Column<string>(nullable: true),
-                    Address3 = table.Column<string>(nullable: true),
-                    CityTown = table.Column<string>(nullable: true),
-                    StateProvince = table.Column<string>(nullable: true),
-                    PostalCode = table.Column<string>(nullable: true),
-                    Country = table.Column<string>(nullable: true)
+                    LocationId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    VenueName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CityTown = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StateProvince = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -32,16 +33,16 @@ namespace CoreCodeCamp.Migrations
                 name: "Speakers",
                 columns: table => new
                 {
-                    SpeakerId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    MiddleName = table.Column<string>(nullable: true),
-                    Company = table.Column<string>(nullable: true),
-                    CompanyUrl = table.Column<string>(nullable: true),
-                    BlogUrl = table.Column<string>(nullable: true),
-                    Twitter = table.Column<string>(nullable: true),
-                    GitHub = table.Column<string>(nullable: true)
+                    SpeakerId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Company = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BlogUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Twitter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GitHub = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -52,13 +53,13 @@ namespace CoreCodeCamp.Migrations
                 name: "Camps",
                 columns: table => new
                 {
-                    CampId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    Moniker = table.Column<string>(nullable: true),
-                    LocationId = table.Column<int>(nullable: true),
-                    EventDate = table.Column<DateTime>(nullable: false),
-                    Length = table.Column<int>(nullable: false)
+                    CampId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Moniker = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LocationId = table.Column<int>(type: "int", nullable: true),
+                    EventDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Length = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -67,21 +68,20 @@ namespace CoreCodeCamp.Migrations
                         name: "FK_Camps_Location_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Location",
-                        principalColumn: "LocationId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "LocationId");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Talks",
                 columns: table => new
                 {
-                    TalkId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CampId = table.Column<int>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
-                    Abstract = table.Column<string>(nullable: true),
-                    Level = table.Column<int>(nullable: false),
-                    SpeakerId = table.Column<int>(nullable: true)
+                    TalkId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CampId = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Abstract = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Level = table.Column<int>(type: "int", nullable: false),
+                    SpeakerId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -91,13 +91,12 @@ namespace CoreCodeCamp.Migrations
                         column: x => x.CampId,
                         principalTable: "Camps",
                         principalColumn: "CampId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Talks_Speakers_SpeakerId",
                         column: x => x.SpeakerId,
                         principalTable: "Speakers",
-                        principalColumn: "SpeakerId",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "SpeakerId");
                 });
 
             migrationBuilder.InsertData(
